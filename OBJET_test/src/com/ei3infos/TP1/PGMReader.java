@@ -42,6 +42,16 @@ public class PGMReader
 				
 				// Lecture des dimensions
 				ligne = lireLigneSuivante();
+				String[] dimensions = ligne.split(" ");
+				if (dimensions.length == 2)
+				{
+					image = new ImagePGM(Integer.parseInt(dimensions[0]), Integer.parseInt(dimensions[1]));
+					
+					
+				} else 
+				{
+					lectureOk = false;
+				}
 			} else
 			{
 				lectureOk = false;
