@@ -16,7 +16,7 @@ public class TP1Objet {
 	 */
 	public static void main(String[] args) 
 	{
-		PGMReader pgmReader= new PGMReader(new File("/images/lena512x512.pgm"));
+		PGMReader pgmReader= new PGMReader(new File("images/lena512x512.pgm"));
 		pgmReader.lireFichier();
 	}
 
