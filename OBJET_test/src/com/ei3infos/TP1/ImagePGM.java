@@ -41,6 +41,13 @@ public class ImagePGM
 		this.hauteur = hauteur;
 		
 		this.niveauGrisPixels = new int[largeur][hauteur];
+		for (int i = 0 ; i < largeur ; i ++)
+		{
+			for (int j = 0 ; j < hauteur ; j ++)
+			{
+				this.niveauGrisPixels[i][j] = 0;
+			}
+		}
 	}
 	
 	/**
@@ -59,14 +66,6 @@ public class ImagePGM
 		valeur = (valeur < 0) ? 0 : valeur;
 		
 		this.niveauGrisPixels[abs][ord] = valeur;
-		
-		for (int i = 0 ; i < largeur ; i ++)
-		{
-			for (int j = 0 ; j < hauteur ; j ++)
-			{
-				this.niveauGrisPixels[i][j] = 0;
-			}
-		}
 	}
 	
 	/**
