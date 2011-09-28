@@ -27,6 +27,11 @@ public class ImagePGM
 	 */
 	private int[][] niveauGrisPixels;
 	
+	public ImagePGM()
+	{
+		this(1, 1);
+	}
+	
 	/**
 	 * Constructeur avec la largeur et la hauteur.
 	 * 

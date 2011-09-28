@@ -12,6 +12,7 @@ import java.io.IOException;
 public class PGMReader 
 {
 	private File fichierImage;
+	private FileReader fr;
 	
 	public PGMReader(File file)
 	{
@@ -20,11 +21,34 @@ public class PGMReader
 	
 	public ImagePGM lireFichier()
 	{
-		ImagePGM image;
+		ImagePGM image = new ImagePGM();
+		boolean lectureOk = true;
 		
 		try 
 		{
-			FileReader fr = new FileReader(fichierImage);
+			fr = new FileReader(fichierImage);
+			
+			
+			// On remet chaque ligne lue dans un String
+			String ligne = "";
+			
+			// On lit les 3 premières lignes
+			ligne = lireLigneSuivante();
+			
+			// on vérifie que le fichier a la bonne en-tête
+			if (ligne.equals("P2"))
+			{
+				lireLigneSuivante();
+				
+				// Lecture des dimensions
+				ligne = lireLigneSuivante();
+			} else
+			{
+				lectureOk = false;
+			}
+			
+			// Lecture des paramètres
+			
 			
 			fr.close();
 		} catch (FileNotFoundException e) 
@@ -39,15 +63,52 @@ public class PGMReader
 		} catch (IOException e) {
 			try 
 			{
-				System.err.println("Erreur lors de la fermeture de la lecture du fichier " + fichierImage.getCanonicalPath());
+				System.err.println("Erreur lors de la lecture du fichier " + fichierImage.getCanonicalPath());
 			} catch (IOException e1) 
 			{
 				e1.printStackTrace();
 			}
 		}
+		if (lectureOk)
+		{
+			System.out.println("Fichier " + fichierImage.getName() + " lu");
+		} else
+		{
+			System.err.println("Erreur lors de la lecture du fichier " + fichierImage.getName() + ". Est-ce bien un fichier pgm ?");
+		}
 		
-		System.out.println("Fichier " + fichierImage.getName() + " lu");
+		return image;
+	}
+
+	private String lireLigneSuivante() 
+	{
+		// le charactère lu
+		int c = 0;
 		
-		return null;
+		String ligne = "";
+		ligne = "";
+		// On lit la ligne
+		try {
+			while (!((c = fr.read()) == 10 || c == -1))
+			{
+//				System.out.println(c);
+//				 10 et 13 correspondent aux fins de ligne
+				if (c != 10 && c != 13)
+				{
+					ligne += (char) c;
+				}
+				}
+		} catch (IOException e) 
+		{
+			try {
+				System.err.println("Erreur lors de la lecture du fichier " + fichierImage.getCanonicalPath());
+			} catch (IOException e1) 
+			{
+				e1.printStackTrace();
+			}
+		}
+		System.out.println(ligne);
+			
+		return ligne;
 	}
 }
